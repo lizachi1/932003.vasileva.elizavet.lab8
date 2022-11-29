@@ -1,0 +1,66 @@
+<!Doctype HTML>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="8.css">
+        <title> Frontend task 9 </title>
+    </head>
+    <body>
+        <div class="list">
+            <div class="container">
+                <input type="text">
+                <input type="number">
+                <button onClick="UpArrow(this)">↑</button>
+                <button onClick="DownArrow(this)">↓</button>
+                <button onClick="DeleteLine(this)">x</button>  
+            </div>  
+        </div>
+        
+        <div class="control">
+            <button onClick="AddNewLine()">Добавить элемент</button>
+            <button onClick="Save()">Сохранить</button>
+        </div>
+        
+        <div class="content"></div>
+        
+        <script>
+            let node = document.querySelector(".container").cloneNode(true);
+            
+            const AddNewLine = () => {
+                document.querySelector(".list").append(node.cloneNode(true));
+            }
+            
+            const DeleteLine = (pointer) => {
+                pointer.parentElement.remove();
+            }
+            
+            const UpArrow = (pointer) => {
+                let previous = pointer.parentElement.previousElementSibling;
+                if (previous) pointer.parentElement.after(previous);
+            }
+            
+            const DownArrow = (pointer) => {
+                let next = pointer.parentElement.nextElementSibling;
+                if (next) pointer.parentElement.before(next);
+            }
+            
+            const Save = () => {           
+                let string = "";
+                let containers = document.querySelectorAll(".container");
+                
+                for (let node of containers) {
+                    let key = node.children[0].value;
+                    let value = node.children[1].value;
+                    
+                    string += `"${key}":"${value}",`;
+                }
+                
+                
+                document.querySelector(".content").innerHTML = `{${string.slice(0, -1)}}`;
+            }
+            
+            
+            
+        </script>
+    </body>
+</html> 
